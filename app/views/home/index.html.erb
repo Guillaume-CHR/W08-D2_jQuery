@@ -1,23 +1,27 @@
 <h1 class="text-center mb-4">Welcome to my todolist app</h1>
 <%= render 'layouts/task_form'  %>
-<div class="container">
-  <ul>
-  <% @categories.each do  |category|%>
-  <li><%= category.title  %></li>
+<div class="container pb-3">
+
+
+  <nav class="nav">
+    <% @categories.each do |category| %>
+      <div class="btn nav-link active"><%= category.title %></div>
+    <% end %>
+  </nav>
   <div class="card">
-    <ul>
-      <% category.tasks.each do |task|  %>
-      <li>
-        <%= task.title  %>
-        <% unless task.deadline.nil? %>
-          , to read: <%= task.deadline.strftime('%D')  %>
+    <% @categories.each do |category| %>
+      <ul id="<%= category.title %>">
+        <% category.tasks.each do |task| %>
+          <li>
+            <%= task.title %>
+            <% unless task.deadline.nil? %>
+              , to read: <%= task.deadline.strftime('%D') %>
+            <% end %>
+          </li>
         <% end %>
-      </li>
-      <% end %>
-    </ul>
+      </ul>
+    <% end %>
   </div>
-  <% end %>
-  </ul>
 </div>
 
 <div class="container">
@@ -31,3 +35,29 @@
     <% end %>
   </div>
 </div>
+
+<script>
+
+  $(function () {
+    $(".btn.nav-link:first").toggleClass('btn-info');
+    $(".btn.nav-link:not(:first)").toggleClass('btn-outline-info');
+    $("div.card > ul:not(:first)").hide();
+
+    $(".btn.nav-link").click(function() {
+      $(this).addClass("btn-info");
+      $(this).removeClass("btn-outline-info");
+      $(this).siblings().addClass("btn-outline-info");
+      $(this).siblings().removeClass("btn-info");
+
+      for (let i = 0; i<$("div.card > ul").length; i++) {
+        idLabel = $("div.card > ul")[i];
+        if($(this).text() == idLabel.id) {
+          $("div.card > ul").eq(i).show()
+        } else {
+          $("div.card > ul").eq(i).hide()
+        }
+      };
+    });
+
+  });
+</script>
