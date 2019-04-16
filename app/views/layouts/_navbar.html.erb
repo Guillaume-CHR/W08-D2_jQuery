@@ -44,5 +44,30 @@
     $('button').click(function() {
       $('div.dropdown > ul').toggle();
     });
+    $loginModal = $(".login-modal").eq(0); 
+    $loginBtn = $('.nav-link:contains("Log in")')
+
+    $loginBtn.click( (event) => {
+      event.preventDefault();
+      $loginModal.toggle()
+    })
+
+    $signInModal = $(".login-modal").eq(1); 
+    $signInBtn = $('.nav-link:contains("Sign up")')
+
+    $signInBtn.click( (event) => {
+      event.preventDefault();
+      $signInModal.toggle()
+    })
+
+    $closeIcon = $('#close');
+    $closeIcon1 = $('#close1');
+
+    $closeIcon.click( () => {
+      $loginModal.hide();
+    }) 
+    $closeIcon1.click( () => {
+      $signInModal.hide();
+    })
   });
 </script>
